@@ -18,7 +18,6 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return 
-    
 """
 Available API endpoints:
 GET /queues						List all queues
@@ -43,7 +42,7 @@ def version():
 def queues_index():
 	"""
 	List all queues
-	
+	curl -s -X GET -H 'Accept: application /json' http://localhost:5000/queues | python -mjson.tool
 	"""
 	all = []
 	conn = get_conn()
@@ -55,8 +54,8 @@ def queues_index():
 @app.route("/queues", methods=['POST'])
 def queues_create():
 	"""
-	Crete queue
-	
+	Create queue
+	curl -X POST -H 'Content-Type: application/json' http://localhost:5000/queues -d '{"name": "OrlaLab12and13"}'	
 	"""
 
 	conn = get_conn()
@@ -70,7 +69,7 @@ def queues_create():
 def queues_remove(name):
 	"""
 	Delete queue
-	
+	curl -X DELETE -H 'Accept: application/json' http://localhost:5000/queues/OrlaLab12and13
 	"""
 
 	conn = get_conn()
@@ -84,6 +83,7 @@ def queues_remove(name):
 def messages_count(name):
 	"""
 	Get message count for queue
+	curl -X GET -H 'Accept: application/json' http://localhost:5000/queues/OrlaLab12and13/msgs/count
 	"""
 
 	conn = get_conn()
@@ -97,6 +97,7 @@ def messages_count(name):
 def messages_write(name):
 	"""
 	Write message to queue
+	curl -s -X POST -H 'Accept: application/json' http://localhost:5000/queues/OrlaLab12and13/msgs -d '{"content": "queue message"}' 
 	"""
 
 	body = request.get_json(force=True)
@@ -117,6 +118,7 @@ def messages_write(name):
 def messages_read(name):
 	"""
 	Get message from queue
+	curl -X GET -H 'Accept: application/json' http://localhost:5000/queues/OrlaLab12and13/msgs
 	"""
 
 	conn = get_conn()
@@ -133,6 +135,7 @@ def messages_read(name):
 def messages_consume(name):
 	"""
 	Consume message from queue
+	curl -X DELETE -H 'Accept: application/json' http://localhost:5000/queues/OrlaLab12and13/msgs
 	"""
 
 	conn = get_conn()
